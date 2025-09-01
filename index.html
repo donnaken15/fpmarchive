@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="title" content="FreePlay Music Archives (2001-2013)">
+		<meta name='keywords' content='freeplay music, free for non-commercial, archive, music library'>
+		<meta name="og:title" content="FreePlay Music Archives (2001-2013)">
+		<meta name="og:description" content="Library of old FreePlay Music organized from Wayback Machine">
+		<meta name="og:image" content="https://donnaken15.github.io/fpmarchive/_meta.jpg">
+		<meta name="og:url" content="https://donnaken15.github.io/fpmarchive/">
+		<meta name="og:type" content="website">
+		<meta name="twitter:title" content="FreePlay Music Archives (2001-2013)">
+		<meta name="twitter:url" content="https://donnaken15.github.io/fpmarchive/">
+		<meta name="twitter:description" content="Library of old FreePlay Music organized from Wayback Machine">
+		<meta name="twitter:image" content="https://donnaken15.github.io/fpmarchive/_meta.jpg">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name='description' content="Library of old FreePlay Music organized from Wayback Machine">
+		<meta name='subject' content='FreePlay Music Archives (2001-2013)'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>FreePlay Music Archives</title>
+		<style>
+		body {
+			font-family: Verdana,Tahoma,sans-serif;
+		}
+		h1, h2, h3, h4 {
+			font-family: Times New Roman,serif;
+			margin:8px 4px;
+			text-align:center;
+		}
+		label, label+select, label+input {
+			margin:0 7px 0 3px;
+			user-select:none;
+			display:inline-block;
+			width:70px;
+		}
+		label {
+			text-align:right;
+		}
+		label+select {
+			width:298px;
+		}
+		select {
+			padding:1px;
+			text-align:left;
+		}
+		h1#loading + div#spanel {
+			display:none;
+		}
+		.filt-box {
+			margin-top:8px;
+		}
+		#sbx_kws {
+			width: 678px;
+		}
+		ol, ul {
+			margin-block-start:0;
+			margin-block-end:0;
+			padding-inline-start:30px;
+			list-style-type:disclosure-closed;
+		}
+		ul > div.song > li {
+			margin-bottom:0px;
+			padding-block-start:5px;
+			padding-block-end:5px;
+			cursor:pointer;
+			font-weight:bold;
+		}
+		ul > div.song > li > div, div.song .fr {
+			padding-inline-end:7px;
+			display:inline-block;
+			float:right;
+			font-weight:normal;
+		}
+		ul > div.song > li > div > span {
+			font-weight:bold;
+		}
+		ul > div.song > li > div > span.shv {
+			cursor:pointer;
+			color:#00c;
+			font-weight:bold;
+		}
+		div#spanel {
+			user-select:none;
+		}
+		#spanel audio#player {
+			display:block;
+			margin-bottom:7px;
+			width:100%;
+		}
+		audio {
+			height:28px;
+		}
+		audio::-webkit-media-controls-panel,audio::-webkit-media-controls-current-time-display,audio::-webkit-media-controls-play-button,audio {
+			margin:0;
+			padding:0;
+		}
+		audio::-webkit-media-controls-timeline {
+			padding-right: 11px;
+			margin: 0;
+		}
+		table, tbody, tr, td {
+			border-collapse: collapse;
+			padding:0;
+			font-size:12px;
+		}
+		table.details tr>td {
+			padding:2px 0;
+			vertical-align:top;
+		}
+		table.details tr>td:nth-child(1) {
+			width:64%;
+		}
+		div#results > ul#songlist > div {
+			padding-bottom:5px;
+		}
+		i.tagline {
+			margin-bottom:4px;font-size:14px;display:block;
+		}
+		table.details {
+			width:100%;
+		}
+		div.song > div > span.files > a.var {
+			font-size:11px;
+		}
+		</style>
+		<script>
+		var res = (async()=>{
+			return await (await fetch("./disco.json")).json();
+		})();
+		</script>
+		<template id="song">
+			<div class="song">
+				<li title="Click to play" class="playit"><span class="title">Carry Me Under</span><div class="vars"><span>0:00</span></div></li>
+				<div style="margin-bottom:5px;font-size:14px;"><span>Download:</span>
+					<span class="files"></span>
+					<div class="fr vol">Hard Rock Vol 3</div>
+				</div>
+				<i class="tagline">&ldquo;<span>Cruel, buzzing guitars bang a grungy riff as a turgid, pummeling beat come in, brutal breaks add a stop-start groove to the threatening track, bombastic and unrelenting.</span>&rdquo;</i>
+				<table class="details">
+					<!-- should probably make two separate columns with individual heights -->
+					<tr>
+						<td>Style: <span class="style">Hard Rock</span>, Tempo: <span class="tempo">Fast</span></td>
+						<td align="right">Composed by: <span class="comp">Deborah DiFonzo, BMI, .</span></td>
+					</tr>
+					<tr>
+						<td>Moods: <span class="moods">Rocking/Hard, Dark/Brooding, Powerful/Commanding, Tense/Dread</span></td>
+						<td align="right" class="pub">Debbie Does Music, BMI (50%), Freeplay Music, BMI (50%)</td>
+					</tr>
+					<tr>
+						<td>Instruments: <span class="parts">Drums, Bass, Guitar</span></td>
+						<td align="right"></td><!-- <a href="" class="svlink">Find this in BMI Songview</a> -->
+					</tr>
+				</table>
+			</div>
+		</template>
+	</head>
+	<body bgcolor="#17154f" style="margin:0;">
+		<div style="max-width:max-content;width:800px;margin:0px auto;background-color:white;padding:16px 24px;">
+			<div><img src="alogo800.webp"><h2>a house of torn memories | the website before the rebrand, and deleted music</h2>
+			<h3>still WIP, more songs will be listed over time, and <span title="found a song that didn't have its AAC format archived">some might not actually be saved</span></h2></div>
+			<div style="text-align:justify;font-size:12px;margin-bottom:12px">
+<span title="yes, I'm lifting this from lostmyspace.com">From 2000 to mid-2013</span>,
+FreePlay Music, as it states, offered 'free for non-commercial use' music, spanning about 7000 tracks.
+It additionally provided paid licenses to use in advertising, promo, radio, DVD, etc.
+You may know of this service solely for housing <span title="Oh De Doo Dah and Carry Me Under">two infamous songs</span>.
+The service has rebranded and appeared to have rebooted in recent times and unfortunately,
+resulted in songs disappearing, <span title="I mean what else could it be">likely due to expired licensing</span>.
+God-knows-who have managed to save a majority of the songs from then using the Wayback Machine, but has left captures
+totally scattered and, obviously, has no way to do exact or humane searches that's not clicking in and out of category pages.
+So, here I bring you an extensive search engine for that. Because of current Internet times, the original
+<a href="http://web.archive.org/web/20081230165843/http://www.freeplaymusic.com/licensing/termsofuse.php">stated terms</a>
+<span title="Oh De Doo Dah is claimed">may or may not apply</span> or be enforced as heavily today, like other decade old copyright situations.
+Personally, I'd say it's best to play it safe and exclusively use these in free-to-watch funny YT
+videos or Source mods. Otherwise, enjoy!</div>
+			<div style="border:solid 1px #0008;border-radius:6px;padding:8px;margin-bottom:10px;">
+				<h1 id="loading" style="font-family:Verdana;user-select:none">Loading</h1>
+				<div id="spanel">
+					<audio id="player" controls></audio>
+					<div style="display:none">
+						<label>Search:</label><input disabled id="sbx_kws"></input>
+						<div id="filters">
+						</div>
+					</div>
+					<hr>
+					<div style="margin-top:8px;border:solid 1px #0008;border-radius:6px;padding:4px" id="results">
+						<ul id="songlist">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<span style="font-size:13px;user-select:none;">Created by <a href="https://donnaken15.com">donnaken15</a> | Data dumping tool: <a href="https://github.com/donnaken15/fpmdump">fpmdump</a></span>
+		</div>
+		<script>
+		(async()=>{
+			// TODO: BMI links, musicbrainz links, frag links (search, filters, selected song)
+			var ce = (...a)=>document.createElement(...a);
+			var any_option = ce('option');
+			any_option.textContent = '\u2217';
+			any_option.value = '';
+			var tags = ['volume','style','mood','tempo'];
+			window.data = await res;
+			for (var t = 0; t < tags.length; t++) {
+				var name = tags[t];
+				var list = data[name+'s'],
+					filt_label = ce('label'),
+					filt_box = ce('select');
+				filt_label.textContent = name[0].toUpperCase() + name.substr(1) + ":";
+				
+				
+				
+				
+				filt_box.disabled = true;
+				
+				
+				
+				filt_box.id = 'sbx_'+name;
+				filt_box.className = 'filt-box';
+				filt_box.appendChild(any_option.cloneNode(true));
+				for (var i = 0; i < list.length; i++) {
+					var item = list[i];
+					if (item === null)
+						continue;
+					var e = ce('option');
+					e.value = i;
+					e.title = "Volume ID: "+(i+1);
+					if (name === 'volume')
+						item = item.title;
+					e.textContent = item;
+					filt_box.appendChild(e);
+				}
+				filters.appendChild(filt_label);
+				filters.appendChild(filt_box);
+				if (t === 1)
+					filters.appendChild(ce('br'));
+			}
+			loading.remove();
+			
+			String.prototype.capitalize = function() {
+				if (this.length < 1)
+					return this;
+				return this[0].toUpperCase()+this.slice(1);
+			}
+			
+			// GOT AN IIS ERROR FOR ONE, SET CAPTURE TIME BASED ON RELEASE DATE OF VOLUME (offset by a few days?)
+			var dlbase = "https://web.archive.org/web/0id_/http://freeplaymusic.com/search/download_file.php?";
+			var songtemplate = song.content.firstElementChild;
+			var basic = function(item,data) { // ...
+				item.textContent = data[item.className];
+			}, enumthing = function(item,data) { // why, because i did
+				item.textContent = window.data[item.className+'s'][data[item.className]] ?? "N/A";
+			};
+			function getfile(entry,vari8n=0,fmt='mp3') {
+				var dlparams = new URLSearchParams(); // ?id=5346&dur=0&type=mp3
+				dlparams.set('id',window.data.tracks.indexOf(entry)+1);
+				dlparams.set('dur',vari8n);
+				dlparams.set('type',fmt);
+				return dlbase+dlparams.toString();
+			}
+			var props = {
+				title: basic,
+				tagline: (item,data) => {
+					item.children[0].textContent = data.desc;
+				}, playit: (item,data) => { // puh puh puh puh puh!!
+					item.addEventListener('click',e=>{
+						scrollTo(0,0);
+						if (player.src === getfile(data)) {
+							player.currentTime = 0;
+							player.play();
+							return false;
+						}
+						player.src = getfile(data);
+						player.play();
+					});
+				}, vars: (item,data) => {
+					// append (<span shv>0:00</span>)
+					// append span: time
+				}, files: (item,data) => {
+					var space = document.createTextNode(" ");
+					for (var x = 0;  x < data.formats.length; x++) {
+						var fmt = data.formats[x];
+						if (data.short !== false) {
+							var link = ce("a");
+							link.textContent = fmt.toUpperCase();
+							link.href = getfile(data,0,fmt);
+							item.appendChild(link);
+							item.appendChild(space.cloneNode(true));
+						} else {
+							item.appendChild(document.createTextNode(fmt.toUpperCase()));
+						}
+						for (var y = 0; y < data.vars.length; y++) {
+							var dur = data.vars[y];
+							var link = ce("a");
+							link.className = 'var';
+							link.textContent = ":"+dur;
+							link.href = getfile(data,dur,fmt);
+							item.appendChild(link);
+							item.appendChild(space.cloneNode(true));
+						}
+					}
+				}, "fr vol": (item,data) => { // im bad
+					item.textContent = (window.data.volumes[data.volume]??{title:"N/A"}).title; // REALLY BAD
+					// how ba-a-a-a-a-ad can i be
+				}, style: enumthing, tempo: enumthing, comp: basic, moods: (item,data) => {
+					item.textContent = (data.moods.map(t=>window.data.moods[t])).join(', ');
+					// temp, make links
+				}, pub: basic,
+				parts: (item,data) => {
+					item.textContent = (data.parts.map(t=>window.data.parts[t])).map(s=>s.capitalize()).join(', ');
+				}
+			};
+			function songitem(entry) {
+				var s = songtemplate.cloneNode(true);
+				var items = Array.from(s.querySelectorAll(".title, .vars, .files, .vol, .style, .tempo, .comp, .moods, .pub, .parts, .tagline, .playit"));
+				//console.log(s);
+				//console.log(entry);
+				for (var i = 0; i < items.length; i++) {
+					var fn = props[items[i].className];
+					if (fn === undefined) {
+						console.error('uncaught '+items[i].className);
+						continue;
+					}
+					fn(items[i],entry);
+				}
+				return s;
+			}
+			for (var i = 0; i < 50; i++) {
+				var select = null;
+				do {
+					select = Math.floor(Math.random()*data.tracks.length);
+					//console.warn("nothing @ "+select);
+				} while (data.tracks[select] === null);
+				songlist.appendChild(songitem(data.tracks[select]));
+			}
+		})();
+		</script>
+	</body>
+</html>
+
+
