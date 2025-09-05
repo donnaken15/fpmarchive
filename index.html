@@ -21,6 +21,7 @@
 		<style>
 		body {
 			font-family: Verdana,Tahoma,sans-serif;
+			overflow-y:scroll;
 		}
 		h1, h2, h3, h4 {
 			font-family: Times New Roman,serif;
@@ -50,12 +51,13 @@
 			margin-top:8px;
 		}
 		#sbx_kws {
-			width: 678px;
+			width: 674px;
+			padding-inline-start:4px;
 		}
 		ol, ul {
 			margin-block-start:0;
 			margin-block-end:0;
-			padding-inline-start:30px;
+			padding-inline-start:25px;
 			list-style-type:disclosure-closed;
 		}
 		ul > div.song > li {
@@ -66,10 +68,13 @@
 			font-weight:bold;
 		}
 		ul > div.song > li > div, div.song .fr {
-			padding-inline-end:7px;
+			padding-inline-end:4px;
 			display:inline-block;
 			float:right;
 			font-weight:normal;
+		}
+		table.details tr>td:nth-child(2) { /* suddenly stopped working with above wtf */
+			padding-inline-end:4px;
 		}
 		ul > div.song > li > div > span {
 			font-weight:bold;
@@ -108,7 +113,7 @@
 			vertical-align:top;
 		}
 		table.details tr>td:nth-child(1) {
-			width:64%;
+			width:56%;
 		}
 		div#results > ul#songlist > div {
 			padding-bottom:5px;
@@ -122,25 +127,49 @@
 		div.song > div > span.files > a.var {
 			font-size:11px;
 		}
+		span.fr.year {
+			font-size:11px;
+		}
+		.hint {
+			border-left: solid 1px #0000;
+			border-bottom: 1px dotted #000;
+			text-decoration: dotted; /* POS DOESN'T WORK!! */
+			cursor: help;
+		}
+		.fr.vol, .tempo, .style {
+			cursor:pointer;
+			color:#4a00b3;
+		}
+		#nores {
+			margin-top:15px;
+			margin-bottom:10px;
+			display:block;
+			width:calc(100% - 25px);
+			font-size:24px;
+			text-align:center;
+			font-family:Arial,Verdana,Tahoma,sans-serif;
+		}
 		</style>
 		<script>
 		var res = (async()=>{
-			return await (await fetch("./disco.json")).json();
+			console.time("load discography");
+			var _ = await (await fetch("./disco.json")).json();
+			console.timeEnd("load discography");
+			return _;
 		})();
 		</script>
 		<template id="song">
 			<div class="song">
-				<li title="Click to play" class="playit"><span class="title">Carry Me Under</span><div class="vars"><span>0:00</span></div></li>
+				<li title="Click to play" class="playit"><span class="title">Carry Me Under</span><div class="vars"></div></li>
 				<div style="margin-bottom:5px;font-size:14px;"><span>Download:</span>
-					<span class="files"></span>
-					<div class="fr vol">Hard Rock Vol 3</div>
+					<span class="files"></span><span class="fr year">2009</span><div class="fr vol">Hard Rock Vol 3</div>
 				</div>
 				<i class="tagline">&ldquo;<span>Cruel, buzzing guitars bang a grungy riff as a turgid, pummeling beat come in, brutal breaks add a stop-start groove to the threatening track, bombastic and unrelenting.</span>&rdquo;</i>
 				<table class="details">
 					<!-- should probably make two separate columns with individual heights -->
 					<tr>
-						<td>Style: <span class="style">Hard Rock</span>, Tempo: <span class="tempo">Fast</span></td>
-						<td align="right">Composed by: <span class="comp">Deborah DiFonzo, BMI, .</span></td>
+						<td>Style: <span class="style">Hard Rock</span>, Tempo: <span class="tempo">Fast</span>, <span class="hint" title="Estimated BPM is calculated using bpm-tools.">BPM</span>: <span class="bpm">N/A</span></td>
+						<td align="right"><span class="devterm">Composed</span> by: <span class="comp">Deborah DiFonzo, BMI, .</span></td>
 					</tr>
 					<tr>
 						<td>Moods: <span class="moods">Rocking/Hard, Dark/Brooding, Powerful/Commanding, Tense/Dread</span></td>
@@ -148,7 +177,7 @@
 					</tr>
 					<tr>
 						<td>Instruments: <span class="parts">Drums, Bass, Guitar</span></td>
-						<td align="right"></td><!-- <a href="" class="svlink">Find this in BMI Songview</a> -->
+						<td align="right"><a target="_blank" class="svlink">Find this in BMI Songview</a></td>
 					</tr>
 				</table>
 			</div>
@@ -156,8 +185,8 @@
 	</head>
 	<body bgcolor="#17154f" style="margin:0;">
 		<div style="max-width:max-content;width:800px;margin:0px auto;background-color:white;padding:16px 24px;">
-			<div><img src="alogo800.webp"><h2>a house of torn memories | the website before the rebrand, and deleted music</h2>
-			<h3>still WIP, more songs will be listed over time, and <span title="found a song that didn't have its AAC format archived">some might not actually be saved</span></h2></div>
+			<div><img width="800" height="128" src="alogo800.webp"><h2>a house of torn memories | the website before the rebrand, and deleted music</h2>
+			<h3>still WIP, more songs will be listed over time, and <span title="found a song with no MP3 archived, and one without AAC archived">some might not actually be saved directly</span></h2></div>
 			<div style="text-align:justify;font-size:12px;margin-bottom:12px">
 <span title="yes, I'm lifting this from lostmyspace.com">From 2000 to mid-2013</span>,
 FreePlay Music, as it states, offered 'free for non-commercial use' music, spanning about 7000 tracks.
@@ -168,18 +197,26 @@ resulted in songs disappearing, <span title="I mean what else could it be">likel
 God-knows-who have managed to save a majority of the songs from then using the Wayback Machine, but has left captures
 totally scattered and, obviously, has no way to do exact or humane searches that's not clicking in and out of category pages.
 So, here I bring you an extensive search engine for that. Because of current Internet times, the original
-<a href="http://web.archive.org/web/20081230165843/http://www.freeplaymusic.com/licensing/termsofuse.php">stated terms</a>
+<a href="https://web.archive.org/web/20130302080331/http://freeplaymusic.com/licensing/termsofuse.php">stated terms</a>
 <span title="Oh De Doo Dah is claimed">may or may not apply</span> or be enforced as heavily today, like other decade old copyright situations.
 Personally, I'd say it's best to play it safe and exclusively use these in free-to-watch funny YT
 videos or Source mods. Otherwise, enjoy!</div>
 			<div style="border:solid 1px #0008;border-radius:6px;padding:8px;margin-bottom:10px;">
 				<h1 id="loading" style="font-family:Verdana;user-select:none">Loading</h1>
 				<div id="spanel">
+					<span style="font-size:26px;font-family:Times New Roman,serif;padding-bottom:6px;display:inline-block;">Now playing: <i id="np_name">&lt;no track chosen&gt;</i></span>
 					<audio id="player" controls></audio>
-					<div style="display:none">
-						<label>Search:</label><input disabled id="sbx_kws"></input>
-						<div id="filters">
-						</div>
+					<div>
+						<label>Search:</label><input name="keywords" id="sbx_kws" name="keywords"></input>
+						<div id="filters"></div>
+						<label><span class="hint" title="BPMs of songs listed here are calculated for this database and could produce mistakes">BPM</span>:</label>
+						<span style="display:inline-block;width:298px">
+						<input id="bpm_filt" name="bpm_filt" class="filt-box" style="width:16px;" type="checkbox"></input>
+						<span>Min: </span><input id="bpm_min" name="bpm_min" class="filt-box" type="number" style="width:38px;text-align:right;" id="sbx_bpm_min" min="40" max="240" value="40"></input>
+						<span>Max: </span><input id="bpm_max" name="bpm_max" class="filt-box" type="number" style="width:38px;text-align:right;" id="sbx_bpm_max" min="40" max="240" value="240"></input>
+						</span>
+						<span style="display:inline-block;width:378px;text-align:right;" id="totaltrax"></span>
+						<!--span style="display:inline-block;width:298px"><button>Clear and shuffle</button></span-->
 					</div>
 					<hr>
 					<div style="margin-top:8px;border:solid 1px #0008;border-radius:6px;padding:4px" id="results">
@@ -192,27 +229,260 @@ videos or Source mods. Otherwise, enjoy!</div>
 		</div>
 		<script>
 		(async()=>{
+			console.time("panel setup");
 			// TODO: BMI links, musicbrainz links, frag links (search, filters, selected song)
-			var ce = (...a)=>document.createElement(...a);
+			var ce = (...a)=>document.createElement(...a), text = (...a)=>document.createTextNode(...a);
 			var any_option = ce('option');
 			any_option.textContent = '\u2217';
-			any_option.value = '';
+			any_option.value = '-1';
+			String.prototype.capitalize = function() {
+				if (this.length < 1)
+					return this;
+				return this[0].toUpperCase()+this.slice(1);
+			}
+			const roundprec = (n,p=0,fn=Math.round) => fn(n*(10**p))/(10**p);
+			const timedisp = s => (Math.floor(s/60).toString()+":"+Math.floor(s%60).toString().padStart(2,'0'));
+			var space = text(" ");
+			// GOT AN IIS ERROR FOR ONE, SET CAPTURE TIME BASED ON RELEASE DATE OF VOLUME (offset by a few days?)
+			var dlbase = "https://web.archive.org/web/0id_/http://freeplaymusic.com/search/download_file.php?";
+			var songtemplate = song.content.firstElementChild;
+			var basic = function(item,data) { // ...
+				item.textContent = data[item.className];
+			}, enumthing = function(item,data) { // why, because i did
+				var en = item.className;
+				var id = data[en];
+				item.textContent = window.data[en+'s'][id] ?? "N/A";
+				item.setAttribute(en,id);
+				item.addEventListener('click',e=>{
+					scrollTo(0,0);
+					document.cookie = en+"="+(search_params[en] = Number(window['sbx_'+en].value = e.target.getAttribute(en))); // stupid
+					user_search();
+				});
+			};
+			function concat_regex(...rs) {
+				var flags = '';
+				var src = '';
+				rs.forEach((r,i)=>{
+					if (!(r instanceof RegExp))
+						throw new Error("Parameter "+i+" "+String(r)+" is not regex");
+					flags += r.flags;
+					var s = r.source;
+					if (s.startsWith('^') && i > 0) // ONE THING, I
+						s = s.slice(1);
+					if (s.endsWith('$') && i < rs.length-1)
+						s = s.slice(0,-1);
+					src += s;
+				});
+				return new RegExp(src, flags.split("").sort().join("").replace(/(.)(?=.*\1)/g, ""));
+			}
+			const esc4rgx = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+			function cookie(name) { // https://www.regex-tutorial.com/getCookieWithRegex.html
+				var m = document.cookie.match(concat_regex((/(^| +)/), new RegExp(esc4rgx(name)), (/=([^;]+)/)));
+				return m ? unescape(m[2]) : null;
+			}
+			function q(obj={}) {
+				var e = Object.entries(obj);
+				var params = new URLSearchParams();
+				for (var i = 0; i < e.length; i++) {
+					params.set(String(e[i][0]), String(e[i][1]));
+				}
+				return params;
+			}
+			function getfile(entry,vari8n=0,fmt='mp3') {
+				var id = window.data.tracks.indexOf(entry);
+				if (id < 0)
+					return null;
+				//var dlparams = new URLSearchParams(); // ?id=5346&dur=0&type=mp3
+				//dlparams.set('id',++id);
+				//dlparams.set('dur',vari8n);
+				//dlparams.set('type',fmt);
+				var dlparams = q({ id: ++id, dur: vari8n, type: fmt });
+				return dlbase+dlparams.toString();
+			}
+			function playbtn(item) {
+				return e=>{
+					var shv = Number(e.target.getAttribute('value'));
+					var test = getfile(item,shv,item.formats[0]);
+					var title_text = item.title;
+					if (shv > 0)
+						title_text += " ("+(shv<=60?(":"+shv):timedisp(shv))+" version)";
+					np_name.textContent = title_text;
+					scrollTo(0,0);
+					if (player.src === test) {
+						player.currentTime = 0;
+						player.play();
+						return false;
+					}
+					player.src = test;
+					player.play();
+				};
+			}
+			var audio_errors = [
+				"MEDIA_ERR_ABORTED",
+				"MEDIA_ERR_NETWORK",
+				"MEDIA_ERR_DECODE",
+				"MEDIA_ERR_SRC_NOT_SUPPORTED"
+			];
+			// missing https://web.archive.org/web/0id_/http://freeplaymusic.com/search/download_file.php?id=2315&dur=60&type=mp3
+			player.addEventListener('error', e=>{
+				if (e.target.error.code === 0)
+					return false;
+				console.error(e);
+				var errstr = e.target.error.message;
+				if (errstr === '')
+					errstr = audio_errors[e.target.error.code-1];
+				if (errstr !== '')
+					errstr = ' ('+errstr+')';
+				alert("Got error code "+String(e.target.error.code)+errstr+"; that song may not be available.");
+			});
+			{
+				var value = cookie("playervol") ?? "1";
+				player.volume = isNaN(value) ? 1 : value; // TOTALLY REDUNDANT
+			}
+			player.addEventListener('volumechange', e=>document.cookie = 'playervol='+e.target.volume);
+			var props = {
+				title: basic,
+				tagline: (item,data) => {
+					item.children[0].textContent = data.desc;
+				}, devterm: (item,data) => {
+					if (data.orch)
+						item.textContent = 'Arranged';
+				}, playit: (item,data) => { // puh puh puh puh puh!!
+					item.addEventListener('click',playbtn(data));
+				}, vars: (item,data) => {
+					var shv = [text("("),null,text(") ")];
+					for (var i = data.vars.length - 1; i >= 0; i--) {
+						var time = data.vars[i];
+						var asdf = (shv[1] = ce('span'));
+						asdf.className = 'shv';
+						asdf.setAttribute('value', data.vars[i]);
+						asdf.textContent = timedisp(time);
+						for (var x = 0; x < shv.length; x++) {
+							item.appendChild(shv[x].cloneNode(true));
+						}
+					}
+					if (data.short !== true) {
+						var whole = ce('span'); // C-SPAN HAH
+						whole.textContent = timedisp(data.time ?? 0);
+						//if (data.vars.length > 0)
+						//	item.appendChild(space.cloneNode(true));
+						item.appendChild(whole);
+					}
+				}, files: (item,data) => {
+					for (var x = 0;  x < data.formats.length; x++) {
+						var fmt = data.formats[x];
+						if (data.short !== false) {
+							var link = ce("a");
+							link.textContent = fmt.toUpperCase();
+							link.href = getfile(data,0,fmt);
+							item.appendChild(link);
+							item.appendChild(space.cloneNode(true));
+						} else {
+							item.appendChild(text(fmt.toUpperCase()));
+						}
+						for (var y = 0; y < data.vars.length; y++) {
+							var dur = data.vars[y];
+							var link = ce("a");
+							link.className = 'var';
+							link.textContent = ":"+dur;
+							link.href = getfile(data,dur,fmt);
+							item.appendChild(link);
+							item.appendChild(space.cloneNode(true));
+						}
+					}
+				}, "fr vol": (item,data) => { // im bad
+					item.textContent = (window.data.volumes[data.volume]??{title:"N/A"}).title; // REALLY BAD
+					// how ba-a-a-a-a-ad can i be
+					item.setAttribute('volume',data.volume);
+					item.addEventListener('click',e=>{
+						scrollTo(0,0);
+						search_params.keywords = sbx_kws.value = '';
+						document.cookie = "volume="+(search_params.volume = Number(sbx_volume.value = e.target.getAttribute('volume'))); // stupid
+						user_search();
+					});
+				}, "fr year": (item,data) => { // this bad
+					var date = new Date((window.data.volumes[data.volume]??{date:NaN}).date);
+					item.textContent = (isNaN(date)) ? "N/A" : date.getFullYear();
+				}, style: enumthing, tempo: enumthing, bpm: (item,data) => {
+					item.textContent = roundprec(data.ebpm,1);
+				}, comp: basic, moods: (item,data) => {
+					if (data.moods === undefined)
+						item.text = '';
+					else
+						try {
+							item.textContent = (data.moods.map(t=>window.data.moods[t])).join(', ');
+						} catch (ex) {
+							console.error(ex);
+							console.error(data);
+							console.error(item);
+						}
+					// temp, make links
+				}, pub: basic, parts: (item,data) => {
+					item.textContent = (data.parts.map(t=>window.data.parts[t])).map(s=>s.capitalize()).join(', ');
+				}, svlink: (item,data) => {
+					if (/SACEM/.test(data.pub)) {
+						item.remove();
+						return false;
+					}
+					var params = q({
+						'SearchForm.View_Count': 5,
+						'SearchForm.Main_Search': 'Title',
+						'SearchForm.Main_Search_Text': data.title,
+						'SearchForm.Sub_Search': 'Writer/Composer',
+						'SearchForm.Sub_Search_Text': data.comp_names.split(' ').slice(0,2).join(' ')
+					});
+					item.href = "https://repertoire.bmi.com/Search/Search?"+params.toString();
+					// https://repertoire.bmi.com/Search/Search?SearchForm.View_Count=20&SearchForm.Main_Search=Title&SearchForm.Main_Search_Text=growl&SearchForm.Sub_Search=Writer%2FComposer&SearchForm.Sub_Search_Text=deborah+difonzo&SearchForm.Search_Type=all
+				}
+			};
+			function songitem(entry) {
+				var s = songtemplate.cloneNode(true);
+				s.setAttribute('index',data.tracks.indexOf(entry));
+				var items = Array.from(s.querySelectorAll(".title, .vars, .files, .vol, .style, .tempo, .comp, .moods, .pub, .parts, .tagline, .playit, .svlink, .year, .devterm, .bpm"));
+				//console.log(s);
+				//console.log(entry);
+				for (var i = 0; i < items.length; i++) {
+					var fn = props[items[i].className];
+					if (fn === undefined) {
+						console.error('uncaught '+items[i].className);
+						continue;
+					}
+					fn(items[i],entry);
+				}
+				return s;
+			}
+			console.timeEnd("panel setup");
+			
+			if (await Promise.race([res, new Promise(_ => setTimeout(() => _(false), 0))]) === false)
+				console.warn("search init finished before data load");
+			
 			var tags = ['volume','style','mood','tempo'];
 			window.data = await res;
+			console.time("data fixing");
+			window.data.volumes.forEach(v=>{
+				if (v === null)
+					return;
+				if (v.date !== undefined)
+					v.date = new Date(v.date);
+			});
+			window.data.tracks.forEach((t,i,a)=>{
+				if (t === null)
+					return;
+				if (t.unsaved === true) {
+					//console.warn(t);
+					a[i] = null;
+				} else {
+					t.comp_names = t.comp.replace(/[,.]|ASCAP|SESAC|BMI|\(\d+%\)|\s+|\b\w\.?\b/g,' ').replace(/ +/g,' ').trim();
+				}
+			});
+			console.timeEnd("data fixing");
+			console.time("creating items");
 			for (var t = 0; t < tags.length; t++) {
 				var name = tags[t];
-				var list = data[name+'s'],
-					filt_label = ce('label'),
-					filt_box = ce('select');
+				var list = data[name+'s'], filt_label = ce('label'), filt_box = ce('select');
 				filt_label.textContent = name[0].toUpperCase() + name.substr(1) + ":";
 				
-				
-				
-				
-				filt_box.disabled = true;
-				
-				
-				
+				filt_box.name = name;
 				filt_box.id = 'sbx_'+name;
 				filt_box.className = 'filt-box';
 				filt_box.appendChild(any_option.cloneNode(true));
@@ -228,109 +498,136 @@ videos or Source mods. Otherwise, enjoy!</div>
 					e.textContent = item;
 					filt_box.appendChild(e);
 				}
+				filt_box.value = cookie(name) ?? "-1";
 				filters.appendChild(filt_label);
 				filters.appendChild(filt_box);
 				if (t === 1)
 					filters.appendChild(ce('br'));
 			}
+			sbx_kws.value = cookie('keywords');
+			console.timeEnd("creating items");
+			var total_tracks = window.data.tracks.reduce((a,b)=>a+(b!==null),0);
+			totaltrax.textContent = String(total_tracks)+" total tracks archived";
+			//console.log('total tracks:',total_tracks);
 			loading.remove();
 			
-			String.prototype.capitalize = function() {
-				if (this.length < 1)
-					return this;
-				return this[0].toUpperCase()+this.slice(1);
-			}
+			var search_params = {
+				keywords: "",
+				volume: "-1",
+				mood: "-1",
+				style: "-1",
+				tempo: "-1",
+				bpm_filt: "0",
+				bpm_min: "40",
+				bpm_max: "240",
+			};
+			Object.keys(search_params).forEach(k=>{ // cookeys
+				search_params[k] = cookie(k) ?? search_params[k];
+			});
+			bpm_filt.checked = search_params.bpm_filt === '1';
+			bpm_min.value = Number(search_params.bpm_min);
+			bpm_max.value = Number(search_params.bpm_max);
 			
-			// GOT AN IIS ERROR FOR ONE, SET CAPTURE TIME BASED ON RELEASE DATE OF VOLUME (offset by a few days?)
-			var dlbase = "https://web.archive.org/web/0id_/http://freeplaymusic.com/search/download_file.php?";
-			var songtemplate = song.content.firstElementChild;
-			var basic = function(item,data) { // ...
-				item.textContent = data[item.className];
-			}, enumthing = function(item,data) { // why, because i did
-				item.textContent = window.data[item.className+'s'][data[item.className]] ?? "N/A";
-			};
-			function getfile(entry,vari8n=0,fmt='mp3') {
-				var dlparams = new URLSearchParams(); // ?id=5346&dur=0&type=mp3
-				dlparams.set('id',window.data.tracks.indexOf(entry)+1);
-				dlparams.set('dur',vari8n);
-				dlparams.set('type',fmt);
-				return dlbase+dlparams.toString();
+			function user_search(limit=2000) {
+				search(limit,
+					search_params.keywords,
+					search_params.volume,
+					search_params.style,
+					search_params.mood,
+					search_params.tempo,
+					search_params.bpm_filt === '1' ? [search_params.bpm_min,search_params.bpm_max] : null
+				);
 			}
-			var props = {
-				title: basic,
-				tagline: (item,data) => {
-					item.children[0].textContent = data.desc;
-				}, playit: (item,data) => { // puh puh puh puh puh!!
-					item.addEventListener('click',e=>{
-						scrollTo(0,0);
-						if (player.src === getfile(data)) {
-							player.currentTime = 0;
-							player.play();
-							return false;
-						}
-						player.src = getfile(data);
-						player.play();
-					});
-				}, vars: (item,data) => {
-					// append (<span shv>0:00</span>)
-					// append span: time
-				}, files: (item,data) => {
-					var space = document.createTextNode(" ");
-					for (var x = 0;  x < data.formats.length; x++) {
-						var fmt = data.formats[x];
-						if (data.short !== false) {
-							var link = ce("a");
-							link.textContent = fmt.toUpperCase();
-							link.href = getfile(data,0,fmt);
-							item.appendChild(link);
-							item.appendChild(space.cloneNode(true));
-						} else {
-							item.appendChild(document.createTextNode(fmt.toUpperCase()));
-						}
-						for (var y = 0; y < data.vars.length; y++) {
-							var dur = data.vars[y];
-							var link = ce("a");
-							link.className = 'var';
-							link.textContent = ":"+dur;
-							link.href = getfile(data,dur,fmt);
-							item.appendChild(link);
-							item.appendChild(space.cloneNode(true));
-						}
+			document.querySelectorAll('input, select').forEach(i=>{
+				i.addEventListener('input',e=>{
+					if (e.target.type === 'checkbox')
+						e.target.value = 0+e.target.checked;
+					var val = search_params[e.target.name] = e.target.value;
+					document.cookie = e.target.name+"="+escape(val);
+					user_search();
+				});
+			});
+			var enum_filts = ['volume','style','tempo'];
+			var sgp = null;
+			function search(limit=2000,kws="",vol=-1,style=-1,mood=-1,tempo=-1,bpm=null) {
+				console.log(search_params);
+				var listed = [];
+				var params = {
+					keywords: kws ?? "",
+					volume: Number(vol),
+					style: Number(style),
+					tempo: Number(tempo),
+					mood: Number(mood),
+					bpm: bpm === null ? null : bpm.map(Number)
+				};
+				if (params.keywords.trim() === "" &&
+					params.volume === -1 &&
+					params.style === -1 &&
+					params.mood === -1 &&
+					params.tempo === -1 &&
+					params.bpm === null) { // why me
+					console.time("picker");
+					songlist.innerHTML = '';
+					limit = 200;
+					for (var i = 0; i < Math.min(limit,total_tracks); i++) {
+						var select = null;
+						do {
+							select = Math.floor(Math.random()*data.tracks.length);
+							//console.warn("nothing @ "+select);
+						} while (data.tracks[select] === null && !listed.includes(select));
+						listed.push(select);
+						songlist.appendChild(songitem(data.tracks[select]));
 					}
-				}, "fr vol": (item,data) => { // im bad
-					item.textContent = (window.data.volumes[data.volume]??{title:"N/A"}).title; // REALLY BAD
-					// how ba-a-a-a-a-ad can i be
-				}, style: enumthing, tempo: enumthing, comp: basic, moods: (item,data) => {
-					item.textContent = (data.moods.map(t=>window.data.moods[t])).join(', ');
-					// temp, make links
-				}, pub: basic,
-				parts: (item,data) => {
-					item.textContent = (data.parts.map(t=>window.data.parts[t])).map(s=>s.capitalize()).join(', ');
+					console.timeEnd("picker");
+				} else {
+					clearTimeout(sgp);
+					sgp = setTimeout(()=>{
+						console.time("picker");
+						songlist.innerHTML = '';
+						var keywords = kws.split(/['".,\/\?!\s]+/g).filter(s=>s!=='').map(s=>s.replace(/(.+)s$/g,'$1'));
+						var l = 0;
+						var narrow = data.tracks.filter(s=>{
+							if (l >= limit) return false;
+							if (s === null) return false;
+							for (var i = 0; i < enum_filts.length; i++) {
+								var e = enum_filts[i];
+								if (params[e] !== -1 && s[e] !== params[e])
+									return false;
+							}
+							if (Array.isArray(s.moods))
+								if (params.mood !== -1 && !(s.moods.includes(params.mood)))
+									return false;
+							for (var i = 0; i < keywords.length; i++) {
+								var k = keywords[i]; // need a system that accounts for alternative spellings
+								var ugh = new RegExp("\\b"+esc4rgx(k),"gi");
+								if (!ugh.test(s.title) && !ugh.test(s.comp_names))
+									return false;
+							}
+							if (params.bpm !== null) {
+								if (params.bpm[0] > s.ebpm)
+									return false;
+								if (params.bpm[1] < s.ebpm)
+									return false;
+							}
+							l++;
+							return true;
+						});
+						for (var i = 0; i < narrow.length; i++) {
+							songlist.appendChild(songitem(narrow[i]));
+						}
+						//console.log(narrow);
+						if (narrow.length === 0)
+							songlist.innerHTML = '<div id="nores">No results found</div>';
+						console.timeEnd("picker");
+					}, 400*(params.keywords!==''&&!(
+						params.volume>-1//||
+						//params.style>-1||
+						//params.mood>-1||
+						//params.tempo>-1
+					)));
 				}
-			};
-			function songitem(entry) {
-				var s = songtemplate.cloneNode(true);
-				var items = Array.from(s.querySelectorAll(".title, .vars, .files, .vol, .style, .tempo, .comp, .moods, .pub, .parts, .tagline, .playit"));
-				//console.log(s);
-				//console.log(entry);
-				for (var i = 0; i < items.length; i++) {
-					var fn = props[items[i].className];
-					if (fn === undefined) {
-						console.error('uncaught '+items[i].className);
-						continue;
-					}
-					fn(items[i],entry);
-				}
-				return s;
 			}
-			for (var i = 0; i < 50; i++) {
-				var select = null;
-				do {
-					select = Math.floor(Math.random()*data.tracks.length);
-					//console.warn("nothing @ "+select);
-				} while (data.tracks[select] === null);
-				songlist.appendChild(songitem(data.tracks[select]));
-			}
+			user_search();
 		})();
 		</script>
 	</body>
